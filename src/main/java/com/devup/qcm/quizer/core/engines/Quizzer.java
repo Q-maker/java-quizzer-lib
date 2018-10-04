@@ -5,5 +5,6 @@ package com.devup.qcm.quizer.core.engines;
  */
 
 public class Quizzer {
+    public final static String TAG = "quizzer";
 
 }

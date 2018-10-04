@@ -1,13 +1,22 @@
 package com.devup.qcm.quizer.core.entities;
 
+import com.devup.qcm.core.io.QPackage;
+
 /**
  * Created by istat on 22/09/17.
  */
 
 public class Quiz {
+    public final static String
+            FIELD_TIME_PER_EXERCISE = "timePerExercise",
+            FIELD_ALLOW_QUESTION_CUSTOM_TIME = "allowQuestionCustomTime",
+            FIELD_MAX_PROPOSITION_PER_EXERCISE = "maxPropositionPerExercise",
+            FIELD_MIN_PROPOSITION_PER_MULTIPLE_CHOICE_EXERCISE = "minPropositionPerMultipleChoiceExercise",
+            FIELD_MIN_TRUE_ANSWER_PER_EXERCISE = "minTrueAnswerPerExercise",
+            FIELD_MAX_TRUE_ANSWER_PER_EXERCISE = "maxTrueAnswerPerExercise";
     public final static String TAG = "quiz";
     public final int DEFAULT_MAX_PROPOSITION_PER_EXERCISE = 4,
-            DEFAULT_MIN_PROPOSITION_PER_MULTIPLE_CHOICE_EXERCISE = 2,
+            DEFAULT_MIN_PROPOSITIN_PER_MULTIPLE_CHOICE_EXERCISE = 2,
             DEFAULT_MAX_TRUE_ANSWER_PER_EXERCISE = 1;
     long timePerExercise;
     boolean allowQuestionCustomTime = true;
@@ -107,5 +116,9 @@ public class Quiz {
 
     public void setPartialSuccessSound(String partialSuccessSound) {
         this.partialSuccessSound = partialSuccessSound;
+    }
+
+    public static Quiz create(QPackage qp) {
+        return null;
     }
 }
