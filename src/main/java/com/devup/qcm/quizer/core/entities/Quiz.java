@@ -16,7 +16,7 @@ public class Quiz {
             FIELD_MAX_TRUE_ANSWER_PER_EXERCISE = "maxTrueAnswerPerExercise";
     public final static String TAG = "quiz";
     public final int DEFAULT_MAX_PROPOSITION_PER_EXERCISE = 4,
-            DEFAULT_MIN_PROPOSITIN_PER_MULTIPLE_CHOICE_EXERCISE = 2,
+            DEFAULT_MIN_PROPOSITION_PER_MULTIPLE_CHOICE_EXERCISE = 2,
             DEFAULT_MAX_TRUE_ANSWER_PER_EXERCISE = 1;
     long timePerExercise;
     boolean allowQuestionCustomTime = true;
