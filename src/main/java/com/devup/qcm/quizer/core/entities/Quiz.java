@@ -1,5 +1,7 @@
 package com.devup.qcm.quizer.core.entities;
 
+import com.devup.qcm.core.engines.Component;
+import com.devup.qcm.core.engines.ComponentManager;
 import com.devup.qcm.core.io.QPackage;
 
 /**
@@ -13,112 +15,121 @@ public class Quiz {
             FIELD_MAX_PROPOSITION_PER_EXERCISE = "maxPropositionPerExercise",
             FIELD_MIN_PROPOSITION_PER_MULTIPLE_CHOICE_EXERCISE = "minPropositionPerMultipleChoiceExercise",
             FIELD_MIN_TRUE_ANSWER_PER_EXERCISE = "minTrueAnswerPerExercise",
-            FIELD_MAX_TRUE_ANSWER_PER_EXERCISE = "maxTrueAnswerPerExercise";
+            FIELD_MAX_TRUE_ANSWER_PER_EXERCISE = "maxTrueAnswerPerExercise",
+            FIELD_BEGINNING_SOUND = "beginningSound",
+            FIELD_ENDING_SOUND = "endingSound",
+            FIELD_SUCCESS_SOUND = "successSound",
+            FIELD_PARTIAL_SUCCESS_SOUND = "partialSuccessSound",
+            FIELD_ERROR_SOUND = "errorSound";
     public final static String TAG = "quiz";
     public final int DEFAULT_MAX_PROPOSITION_PER_EXERCISE = 4,
             DEFAULT_MIN_PROPOSITION_PER_MULTIPLE_CHOICE_EXERCISE = 2,
             DEFAULT_MAX_TRUE_ANSWER_PER_EXERCISE = 1;
-    long timePerExercise;
-    boolean allowQuestionCustomTime = true;
-    int maxPropositionPerExercise = DEFAULT_MAX_PROPOSITION_PER_EXERCISE;
-    int minPropositionPerMultipleChoiceExercise = DEFAULT_MIN_PROPOSITION_PER_MULTIPLE_CHOICE_EXERCISE;
-    int maxTrueAnswerPerExercise = DEFAULT_MAX_TRUE_ANSWER_PER_EXERCISE;
-    String backgroundSound,
-            beginningSound,
-            endingSound,
-            successSound,
-            errorSound,
-            partialSuccessSound;
+    Component component;
+
+    Quiz(Component component) {
+        this.component = component;
+    }
+
+    public Quiz from(QPackage qp) {
+        Component component = ComponentManager.getInstance().fetch(qp).getComponent(Quiz.TAG);
+        if (component == null) {
+            return null;
+        }
+        Quiz quiz = new Quiz(component);
+        return quiz;
+    }
 
     public long getTimePerExercise() {
-        return timePerExercise;
+        return component.getSummaryProperties().getInt(FIELD_TIME_PER_EXERCISE);
     }
 
-    public void setTimePerExercise(long timePerExercise) {
-        this.timePerExercise = timePerExercise;
-    }
 
     public boolean isAllowQuestionCustomTime() {
-        return allowQuestionCustomTime;
+        return component.getSummaryProperties().getBoolean(FIELD_ALLOW_QUESTION_CUSTOM_TIME);
     }
 
-    public void setAllowQuestionCustomTime(boolean allowQuestionCustomTime) {
-        this.allowQuestionCustomTime = allowQuestionCustomTime;
-    }
+//    public void setAllowQuestionCustomTime(boolean allowQuestionCustomTime) {
+//        this.allowQuestionCustomTime = allowQuestionCustomTime;
+//    }
 
     public int getMaxPropositionPerExercise() {
-        return maxPropositionPerExercise;
+        return component.getSummaryProperties().getInt(FIELD_MAX_PROPOSITION_PER_EXERCISE);
     }
 
-    public void setMaxPropositionPerExercise(int maxPropositionPerExercise) {
-        this.maxPropositionPerExercise = maxPropositionPerExercise;
-    }
+//    public void setMaxPropositionPerExercise(int maxPropositionPerExercise) {
+//        this.maxPropositionPerExercise = maxPropositionPerExercise;
+//    }
 
     public int getMinPropositionPerMultipleChoiceExercise() {
-        return minPropositionPerMultipleChoiceExercise;
+        return component.getSummaryProperties().getInt(FIELD_MIN_PROPOSITION_PER_MULTIPLE_CHOICE_EXERCISE);
     }
 
-    public void setMinPropositionPerMultipleChoiceExercise(int minPropositionPerMultipleChoiceExercise) {
-        this.minPropositionPerMultipleChoiceExercise = minPropositionPerMultipleChoiceExercise;
-    }
+//    public void setMinPropositionPerMultipleChoiceExercise(int minPropositionPerMultipleChoiceExercise) {
+//        this.minPropositionPerMultipleChoiceExercise = minPropositionPerMultipleChoiceExercise;
+//    }
 
     public int getMaxTrueAnswerPerExercise() {
-        return maxTrueAnswerPerExercise;
+        return component.getSummaryProperties().getInt(FIELD_MAX_TRUE_ANSWER_PER_EXERCISE);
     }
 
-    public void setMaxTrueAnswerPerExercise(int maxTrueAnswerPerExercise) {
-        this.maxTrueAnswerPerExercise = maxTrueAnswerPerExercise;
-    }
+//    public void setMaxTrueAnswerPerExercise(int maxTrueAnswerPerExercise) {
+//        this.maxTrueAnswerPerExercise = maxTrueAnswerPerExercise;
+//    }
 
     public String getBackgroundSound() {
-        return backgroundSound;
+        return component.getSummary().getSoundUri();
     }
 
-    public void setBackgroundSound(String backgroundSound) {
-        this.backgroundSound = backgroundSound;
-    }
+//    public void setBackgroundSound(String backgroundSound) {
+//        this.backgroundSound = backgroundSound;
+//    }
 
     public String getBeginningSound() {
-        return beginningSound;
+        return component.getSummaryProperties().getString(FIELD_BEGINNING_SOUND);
     }
 
-    public void setBeginningSound(String beginningSound) {
-        this.beginningSound = beginningSound;
-    }
 
+    //    public void setTimePerExercise(long timePerExercise) {
+//        this.timePerExercise = timePerExercise;
+//    }
+//
+//    public void setBeginningSound(String beginningSound) {
+//        this.beginningSound = beginningSound;
+//    }
+//
     public String getEndingSound() {
-        return endingSound;
+        return component.getSummaryProperties().getString(FIELD_ENDING_SOUND);
     }
 
-    public void setEndingSound(String endingSound) {
-        this.endingSound = endingSound;
-    }
-
+    //    public void setEndingSound(String endingSound) {
+//        this.endingSound = endingSound;
+//    }
+//
     public String getSuccessSound() {
-        return successSound;
+        return component.getSummaryProperties().getString(FIELD_SUCCESS_SOUND);
     }
 
-    public void setSuccessSound(String successSound) {
-        this.successSound = successSound;
-    }
-
+    //
+//    public void setSuccessSound(String successSound) {
+//        this.successSound = successSound;
+//    }
+//
     public String getErrorSound() {
-        return errorSound;
+        return component.getSummaryProperties().getString(FIELD_ERROR_SOUND);
     }
 
-    public void setErrorSound(String errorSound) {
-        this.errorSound = errorSound;
-    }
-
+    //
+//    public void setErrorSound(String errorSound) {
+//        this.errorSound = errorSound;
+//    }
+//
     public String getPartialSuccessSound() {
-        return partialSuccessSound;
+        return component.getSummaryProperties().getString(FIELD_PARTIAL_SUCCESS_SOUND);
     }
+//
+//    public void setPartialSuccessSound(String partialSuccessSound) {
+//        this.partialSuccessSound = partialSuccessSound;
+//    }
 
-    public void setPartialSuccessSound(String partialSuccessSound) {
-        this.partialSuccessSound = partialSuccessSound;
-    }
-
-    public static Quiz create(QPackage qp) {
-        return null;
-    }
 }
