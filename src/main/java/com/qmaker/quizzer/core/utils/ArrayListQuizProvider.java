@@ -1,9 +1,9 @@
-package com.devup.qcm.quizer.core.utils;
+package com.qmaker.quizzer.core.utils;
 
-import com.devup.qcm.core.entities.Exercise;
-import com.devup.qcm.core.entities.Test;
-import com.devup.qcm.core.utils.ArrayListExerciseProvider;
-import com.devup.qcm.quizer.core.interfaces.QuizProvider;
+import com.qmaker.core.entities.Exercise;
+import com.qmaker.core.entities.Test;
+import com.qmaker.core.utils.ArrayListExerciseProvider;
+import com.qmaker.quizzer.core.interfaces.QuizProvider;
 
 import java.util.List;
 

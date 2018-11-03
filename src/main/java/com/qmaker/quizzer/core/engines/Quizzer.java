@@ -1,4 +1,4 @@
-package com.devup.qcm.quizer.core.engines;
+package com.qmaker.quizzer.core.engines;
 
 /**
  * Created by istat on 29/08/17.

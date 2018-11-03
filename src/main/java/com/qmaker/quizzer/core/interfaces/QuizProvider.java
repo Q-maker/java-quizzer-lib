@@ -1,7 +1,7 @@
-package com.devup.qcm.quizer.core.interfaces;
+package com.qmaker.quizzer.core.interfaces;
 
-import com.devup.qcm.core.entities.Exercise;
-import com.devup.qcm.core.interfaces.ExerciseProvider;
+import com.qmaker.core.entities.Exercise;
+import com.qmaker.core.interfaces.ExerciseProvider;
 
 /**
  * Created by istat on 10/12/17.

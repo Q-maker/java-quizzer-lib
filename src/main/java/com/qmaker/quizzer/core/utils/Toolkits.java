@@ -1,8 +1,8 @@
-package com.devup.qcm.quizer.core.utils;
+package com.qmaker.quizzer.core.utils;
 
-import com.devup.qcm.core.entities.Qcm;
-import com.devup.qcm.core.entities.Questionnaire;
-import com.devup.qcm.core.utils.QcmUtils;
+import com.qmaker.core.entities.Qcm;
+import com.qmaker.core.entities.Questionnaire;
+import com.qmaker.core.utils.QcmUtils;
 
 import java.util.ArrayList;
 import java.util.Collections;

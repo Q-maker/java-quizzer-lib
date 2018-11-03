@@ -1,8 +1,8 @@
-package com.devup.qcm.quizer.core.entities;
+package com.qmaker.quizzer.core.entities;
 
-import com.devup.qcm.core.engines.Component;
-import com.devup.qcm.core.engines.ComponentManager;
-import com.devup.qcm.core.io.QPackage;
+import com.qmaker.core.engines.Component;
+import com.qmaker.core.engines.ComponentManager;
+import com.qmaker.core.io.QPackage;
 
 /**
  * Created by istat on 22/09/17.

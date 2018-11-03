@@ -1,13 +1,10 @@
-package com.devup.qcm.quizer.core.entities;
+package com.qmaker.quizzer.core.entities;
 
-import com.devup.qcm.core.io.QPackage;
-import com.devup.qcm.core.utils.Bundle;
-import com.devup.qcm.core.utils.QFileUtils;
+import com.qmaker.core.io.QPackage;
 import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 
 import istat.android.base.tools.ToolKits;
 
