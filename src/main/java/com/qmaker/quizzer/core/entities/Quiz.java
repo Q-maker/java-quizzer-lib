@@ -31,7 +31,7 @@ public class Quiz {
         this.component = component;
     }
 
-    public Quiz from(QPackage qp) {
+    public static Quiz from(QPackage qp) {
         Component component = ComponentManager.getInstance().fetch(qp).getComponent(Quiz.TAG);
         if (component == null) {
             return null;
@@ -53,7 +53,7 @@ public class Quiz {
 //        this.allowQuestionCustomTime = allowQuestionCustomTime;
 //    }
 
-    public int getMaxPropositionPerExercise() {
+    public int getMaxPropositionPerCountExercise() {
         return component.getSummaryProperties().getInt(FIELD_MAX_PROPOSITION_PER_EXERCISE);
     }
 
@@ -61,7 +61,7 @@ public class Quiz {
 //        this.maxPropositionPerExercise = maxPropositionPerExercise;
 //    }
 
-    public int getMinPropositionPerMultipleChoiceExercise() {
+    public int getMinPropositionCountPerMultipleChoiceExercise() {
         return component.getSummaryProperties().getInt(FIELD_MIN_PROPOSITION_PER_MULTIPLE_CHOICE_EXERCISE);
     }
 
@@ -69,7 +69,7 @@ public class Quiz {
 //        this.minPropositionPerMultipleChoiceExercise = minPropositionPerMultipleChoiceExercise;
 //    }
 
-    public int getMaxTrueAnswerPerExercise() {
+    public int getMaxTrueAnswerCountPerExercise() {
         return component.getSummaryProperties().getInt(FIELD_MAX_TRUE_ANSWER_PER_EXERCISE);
     }
 
