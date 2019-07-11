@@ -145,11 +145,17 @@ public class Quiz implements QPackage {
 
     Questionnaire cachedQuestionnaire;
 
+    //TODO reflechir au bien fondé de mettre l'instance de Quetionnaire en cache.
     @Override
     public Questionnaire getQuestionnaire() throws IOException {
         if (cachedQuestionnaire == null) {
-            cachedQuestionnaire = toQuiz(component.getQuestionnaire());
+            return fetchQuestionnaire();
         }
+        return cachedQuestionnaire;
+    }
+
+    public Questionnaire fetchQuestionnaire() throws IOException {
+        cachedQuestionnaire = toQuiz(component.getQuestionnaire());
         return cachedQuestionnaire;
     }
 
@@ -169,8 +175,8 @@ public class Quiz implements QPackage {
     }
 
     @Override
-    public boolean exist() {
-        return component.getQPackage().exist();
+    public boolean exists() {
+        return component.getQPackage().exists();
     }
 
     @Override
@@ -205,7 +211,7 @@ public class Quiz implements QPackage {
         maxAnswerTrue = bundle.getInt(Quiz.FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE, 1);
 
         qcms = com.qmaker.core.utils.QuestionnaireUtils.customiseQuestionnaire(qcms, qcms.getConfig().isRandomEnable(), qcms.getConfig().isRandomEnable(),
-                qcms.getConfig().getMaxQuestionCountPerSession(),
+                -1,
                 minAnswer > 0 ? minAnswer : 1,
                 maxAnswer > 0 ? maxAnswer : 4,
                 minAnswerTrue > 0 ? minAnswerTrue : 1,
