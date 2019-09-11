@@ -14,23 +14,80 @@ import java.io.IOException;
  */
 
 public class Quiz implements QPackage {
+    @Deprecated
+    public final static String FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE = "maxPropositionCountPerExercise",
+            FIELD_MIN_PROPOSITION_COUNT_PER_MULTIPLE_CHOICE_EXERCISE = "minPropositionCountPerMultipleChoiceExercise",
+            FIELD_MIN_TRUE_ANSWER_COUNT_PER_EXERCISE = "minTrueAnswerCountPerExercise",
+            FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE = "maxTrueAnswerCountPerExercise";
     public final static String
             FIELD_TIME_PER_EXERCISE = "timePerExercise",
             FIELD_ALLOW_QUESTION_CUSTOM_TIME = "allowQuestionCustomTime",
-            FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE = "maxPropositionCountPerExercise",
-            FIELD_MIN_PROPOSITION_COUNT_PER_MULTIPLE_CHOICE_EXERCISE = "minPropositionCountPerMultipleChoiceExercise",
-            FIELD_MIN_TRUE_ANSWER_COUNT_PER_EXERCISE = "minTrueAnswerCountPerExercise",
-            FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE = "maxTrueAnswerCountPerExercise",
-            FIELD_BEGINNING_SOUND = "beginningSound",
-            FIELD_ENDING_SOUND = "endingSound",
-            FIELD_SUCCESS_SOUND = "successSound",
-            FIELD_PARTIAL_SUCCESS_SOUND = "partialSuccessSound",
-            FIELD_ERROR_SOUND = "errorSound";
+            FIELD_BEGINNING_SOUND_URI = "beginningSoundUri",
+            FIELD_ENDING_SOUND_URI = "endingSoundUri",
+            FIELD_SUCCESS_SOUND_URI = "successSoundUri",
+            FIELD_PARTIAL_SUCCESS_SOUND_URI = "partialSuccessSoundUri",
+            FIELD_FAILURE_SOUND_URI = "failureSoundUri",
+            FIELD_ERROR_SOUND_URI = "errorSoundUri";
     public final static String TAG = "quiz";
     public final int DEFAULT_MAX_PROPOSITION_COUNT_PER_EXERCISE = 4,
             DEFAULT_MIN_PROPOSITION_COUNT_PER_MULTIPLE_CHOICE_EXERCISE = 2,
             DEFAULT_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE = 1;
     Component component;
+
+    public final static class DefinitionBuilder {
+        Component.Definition definition = new Component.Definition(Quiz.TAG);
+
+        public DefinitionBuilder setTimePerExerise(long time) {
+            definition.putSummaryProperty(FIELD_TIME_PER_EXERCISE, time);
+            return this;
+        }
+
+        public DefinitionBuilder setAllowQuestionCustomTime(boolean value) {
+            definition.putSummaryProperty(FIELD_ALLOW_QUESTION_CUSTOM_TIME, value);
+            return this;
+        }
+
+        public DefinitionBuilder setBeginSoundUri(String uri) {
+            definition.putSummaryProperty(FIELD_BEGINNING_SOUND_URI, uri);
+            return this;
+        }
+
+        public DefinitionBuilder setEndingSoundUri(String uri) {
+            definition.putSummaryProperty(FIELD_ENDING_SOUND_URI, uri);
+            return this;
+        }
+
+        public DefinitionBuilder setSuccedSoundUri(String uri) {
+            definition.putSummaryProperty(FIELD_SUCCESS_SOUND_URI, uri);
+            return this;
+        }
+
+        public DefinitionBuilder setPartialSuccedSoundUri(String uri) {
+            definition.putSummaryProperty(FIELD_SUCCESS_SOUND_URI, uri);
+            return this;
+        }
+
+        public DefinitionBuilder setFailureSoundUri(String uri) {
+            definition.putSummaryProperty(FIELD_FAILURE_SOUND_URI, uri);
+            return this;
+        }
+
+        public DefinitionBuilder setErrorSoundUri(String uri) {
+            definition.putSummaryProperty(FIELD_ERROR_SOUND_URI, uri);
+            return this;
+        }
+
+
+        public Component.Definition create() {
+            return definition;
+        }
+
+        public Quiz create(QPackage qPackage) throws IOException {
+            Component component = ComponentManager.getInstance().apply(definition, qPackage);
+            return new Quiz(component);
+        }
+
+    }
 
     Quiz(Component component) {
         this.component = component;
@@ -59,83 +116,44 @@ public class Quiz implements QPackage {
         return component.getSummaryProperties().getBoolean(FIELD_ALLOW_QUESTION_CUSTOM_TIME);
     }
 
-//    public void setAllowQuestionCustomTime(boolean allowQuestionCustomTime) {
-//        this.allowQuestionCustomTime = allowQuestionCustomTime;
-//    }
-
     public int getMaxPropositionPerCountExercise() {
         return component.getSummaryProperties().getInt(FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE);
     }
-
-//    public void setMaxPropositionPerExercise(int maxPropositionPerExercise) {
-//        this.maxPropositionPerExercise = maxPropositionPerExercise;
-//    }
 
     public int getMinPropositionCountPerMultipleChoiceExercise() {
         return component.getSummaryProperties().getInt(FIELD_MIN_PROPOSITION_COUNT_PER_MULTIPLE_CHOICE_EXERCISE);
     }
 
-//    public void setMinPropositionPerMultipleChoiceExercise(int minPropositionPerMultipleChoiceExercise) {
-//        this.minPropositionPerMultipleChoiceExercise = minPropositionPerMultipleChoiceExercise;
-//    }
-
     public int getMaxTrueAnswerCountPerExercise() {
         return component.getSummaryProperties().getInt(FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE);
     }
 
-//    public void setMaxTrueAnswerPerExercise(int maxTrueAnswerPerExercise) {
-//        this.maxTrueAnswerPerExercise = maxTrueAnswerPerExercise;
-//    }
-
-    public String getBackgroundSound() {
+    public String getBackgroundSoundUri() {
         return component.getSummary().getSoundUri();
     }
 
-//    public void setBackgroundSound(String backgroundSound) {
-//        this.backgroundSound = backgroundSound;
-//    }
-
-    public String getBeginningSound() {
-        return component.getSummaryProperties().getString(FIELD_BEGINNING_SOUND);
+    public String getBeginningSoundUri() {
+        return component.getSummaryProperties().getString(FIELD_BEGINNING_SOUND_URI);
     }
 
-
-    //    public void setTimePerExercise(long timePerExercise) {
-//        this.timePerExercise = timePerExercise;
-//    }
-//
-//    public void setBeginningSound(String beginningSound) {
-//        this.beginningSound = beginningSound;
-//    }
-//
-    public String getEndingSound() {
-        return component.getSummaryProperties().getString(FIELD_ENDING_SOUND);
+    public String getEndingSoundUri() {
+        return component.getSummaryProperties().getString(FIELD_ENDING_SOUND_URI);
     }
 
-    //    public void setEndingSound(String endingSound) {
-//        this.endingSound = endingSound;
-//    }
-//
-    public String getSuccessSound() {
-        return component.getSummaryProperties().getString(FIELD_SUCCESS_SOUND);
+    public String getSuccessSoundUri() {
+        return component.getSummaryProperties().getString(FIELD_SUCCESS_SOUND_URI);
     }
 
-    //
-//    public void setSuccessSound(String successSound) {
-//        this.successSound = successSound;
-//    }
-//
-    public String getErrorSound() {
-        return component.getSummaryProperties().getString(FIELD_ERROR_SOUND);
+    public String getFailureSoundUri() {
+        return component.getSummaryProperties().getString(FIELD_FAILURE_SOUND_URI);
     }
 
-    //
-//    public void setErrorSound(String errorSound) {
-//        this.errorSound = errorSound;
-//    }
-//
-    public String getPartialSuccessSound() {
-        return component.getSummaryProperties().getString(FIELD_PARTIAL_SUCCESS_SOUND);
+    public String getErrorSoundUri() {
+        return component.getSummaryProperties().getString(FIELD_ERROR_SOUND_URI);
+    }
+
+    public String getPartialSuccessSoundUri() {
+        return component.getSummaryProperties().getString(FIELD_PARTIAL_SUCCESS_SOUND_URI);
     }
 
     @Override
@@ -217,6 +235,10 @@ public class Quiz implements QPackage {
                 minAnswerTrue > 0 ? minAnswerTrue : 1,
                 maxAnswerTrue > 0 ? maxAnswerTrue : 1);
         return qcms;
+    }
+
+    public void reset() {
+        this.cachedQuestionnaire = null;
     }
 //
 //    public void setPartialSuccessSound(String partialSuccessSound) {
