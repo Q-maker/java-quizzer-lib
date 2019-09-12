@@ -77,8 +77,19 @@ public class Quiz implements QPackage {
             return this;
         }
 
+        public DefinitionBuilder setPriority(int priority) {
+            definition.setPriority(priority);
+            return this;
+        }
+
+        public DefinitionBuilder setEnable(boolean state) {
+            definition.setEnable(state);
+            return this;
+        }
 
         public Component.Definition create() {
+            definition.setName("quizzer");
+            definition.setBuilderVersionCode(2);
             return definition;
         }
 
@@ -159,6 +170,18 @@ public class Quiz implements QPackage {
     @Override
     public QSummary getSummary() {
         return component.getSummary();
+    }
+
+    public boolean isEnable() {
+        return component.isEnable();
+    }
+
+    public int getBuilderVersion() {
+        return component.getBuilderVersionCode();
+    }
+
+    public int getPriority() {
+        return component.getPriority();
     }
 
     Questionnaire cachedQuestionnaire;
