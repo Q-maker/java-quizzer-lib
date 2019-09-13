@@ -82,10 +82,10 @@ public class Quiz implements QPackage {
             return this;
         }
 
-        public DefinitionBuilder setEnable(boolean state) {
-            definition.setEnable(state);
-            return this;
-        }
+//        public DefinitionBuilder setEnable(boolean state) {
+//            definition.setEnable(state);
+//            return this;
+//        }
 
         public Component.Definition create() {
             definition.setName("quizzer");
