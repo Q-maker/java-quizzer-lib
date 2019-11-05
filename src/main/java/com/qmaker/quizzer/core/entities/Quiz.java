@@ -4,6 +4,7 @@ import com.qmaker.core.engines.Component;
 import com.qmaker.core.engines.ComponentManager;
 import com.qmaker.core.engines.QSystem;
 import com.qmaker.core.entities.QSummary;
+import com.qmaker.core.entities.Qcm;
 import com.qmaker.core.entities.Questionnaire;
 import com.qmaker.core.io.QPackage;
 
@@ -14,10 +15,8 @@ import java.io.IOException;
  */
 
 public class Quiz implements QPackage {
-    @Deprecated
+
     public final static String FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE = "maxPropositionCountPerExercise",
-            FIELD_MIN_PROPOSITION_COUNT_PER_MULTIPLE_CHOICE_EXERCISE = "minPropositionCountPerMultipleChoiceExercise",
-            FIELD_MIN_TRUE_ANSWER_COUNT_PER_EXERCISE = "minTrueAnswerCountPerExercise",
             FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE = "maxTrueAnswerCountPerExercise";
     public final static String
             FIELD_TIME_PER_EXERCISE = "timePerExercise",
@@ -131,10 +130,6 @@ public class Quiz implements QPackage {
         return component.getSummaryProperties().getInt(FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE);
     }
 
-    public int getMinPropositionCountPerMultipleChoiceExercise() {
-        return component.getSummaryProperties().getInt(FIELD_MIN_PROPOSITION_COUNT_PER_MULTIPLE_CHOICE_EXERCISE);
-    }
-
     public int getMaxTrueAnswerCountPerExercise() {
         return component.getSummaryProperties().getInt(FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE);
     }
@@ -241,22 +236,20 @@ public class Quiz implements QPackage {
     }
 
     private Questionnaire toQuiz(Questionnaire qcms) {
-        int minAnswer;
         int maxAnswer;
-        int minAnswerTrue;
         int maxAnswerTrue;
         com.qmaker.core.utils.Bundle bundle = component.getSummaryProperties();
-        minAnswer = bundle.getInt(Quiz.FIELD_MIN_PROPOSITION_COUNT_PER_MULTIPLE_CHOICE_EXERCISE, 1);
         maxAnswer = bundle.getInt(Quiz.FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE, 4);
-        minAnswerTrue = bundle.getInt(Quiz.FIELD_MIN_TRUE_ANSWER_COUNT_PER_EXERCISE, 1);
         maxAnswerTrue = bundle.getInt(Quiz.FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE, 1);
 
-        qcms = com.qmaker.core.utils.QuestionnaireUtils.customiseQuestionnaire(qcms, qcms.getConfig().isRandomEnable(), qcms.getConfig().isRandomEnable(),
-                -1,
-                minAnswer > 0 ? minAnswer : 1,
-                maxAnswer > 0 ? maxAnswer : 4,
-                minAnswerTrue > 0 ? minAnswerTrue : 1,
-                maxAnswerTrue > 0 ? maxAnswerTrue : 1);
+        for (Qcm qcm : qcms.getQcms()) {
+            if (qcm.getMaxPropositionPerExercise() <= 0) {
+                qcm.setMaxPropositionPerExercise(maxAnswer);
+            }
+            if (qcm.getMaxTruePropositionPerExercise() <= 0) {
+                qcm.setMaxTruePropositionPerExercise(maxAnswerTrue);
+            }
+        }
         return qcms;
     }
 
