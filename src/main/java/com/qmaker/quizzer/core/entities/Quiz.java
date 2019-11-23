@@ -243,6 +243,7 @@ public class Quiz implements QPackage {
         maxAnswerTrue = bundle.getInt(Quiz.FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE, 1);
 
         for (Qcm qcm : qcms.getQcms()) {
+            qcm.setPropositionRandomizationType(Qcm.PROPOSITION_RANDOMIZATION_TYPE_ALWAYS);
             if (qcm.getMaxPropositionPerExercise() <= 0) {
                 qcm.setMaxPropositionPerExercise(maxAnswer);
             }
