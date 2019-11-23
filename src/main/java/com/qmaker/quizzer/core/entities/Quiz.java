@@ -9,6 +9,8 @@ import com.qmaker.core.entities.Questionnaire;
 import com.qmaker.core.io.QPackage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by istat on 22/09/17.
@@ -241,16 +243,36 @@ public class Quiz implements QPackage {
         com.qmaker.core.utils.Bundle bundle = component.getSummaryProperties();
         maxAnswer = bundle.getInt(Quiz.FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE, 4);
         maxAnswerTrue = bundle.getInt(Quiz.FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE, 1);
-
+        List<Qcm> toRemove = new ArrayList();
+        int propositionWithTrueTruth;
+        String qcmType;
         for (Qcm qcm : qcms.getQcms()) {
-            if (qcm.getPropositions(true).size() > 1) {
-                qcm.setPropositionRandomizationType(Qcm.PROPOSITION_RANDOMIZATION_TYPE_ALWAYS);
+            if (qcm == null) {
+                continue;
             }
-            if (qcm.getMaxPropositionPerExercise() <= 0) {
-                qcm.setMaxPropositionPerExercise(maxAnswer);
+            qcmType = qcm.getType();
+            if (qcmType == null ||
+                    Qcm.TYPE_AUTO.equals(qcmType) ||
+                    Qcm.TYPE_SELECT_EACH.equals(qcmType) ||
+                    Qcm.TYPE_SELECT_ALL.equals(qcmType)) {
+                if ((propositionWithTrueTruth = qcm.getPropositions(true).size()) > 1) {
+                    qcm.setPropositionRandomizationType(Qcm.PROPOSITION_RANDOMIZATION_TYPE_ALWAYS);
+                }
+                if (propositionWithTrueTruth == qcm.getPropositionCount()) {
+                    toRemove.add(qcm);
+                } else {
+                    if (qcm.getMaxPropositionPerExercise() <= 0) {
+                        qcm.setMaxPropositionPerExercise(maxAnswer);
+                    }
+                    if (qcm.getMaxTruePropositionPerExercise() <= 0) {
+                        qcm.setMaxTruePropositionPerExercise(maxAnswerTrue);
+                    }
+                }
             }
-            if (qcm.getMaxTruePropositionPerExercise() <= 0) {
-                qcm.setMaxTruePropositionPerExercise(maxAnswerTrue);
+        }
+        if (!toRemove.isEmpty()) {
+            for (Qcm qcm : toRemove) {
+                qcms.getQcms().remove(qcm);
             }
         }
         return qcms;
