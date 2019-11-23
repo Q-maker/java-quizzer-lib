@@ -258,7 +258,7 @@ public class Quiz implements QPackage {
                 if ((propositionWithTrueTruth = qcm.getPropositions(true).size()) > 1) {
                     qcm.setPropositionRandomizationType(Qcm.PROPOSITION_RANDOMIZATION_TYPE_ALWAYS);
                 }
-                if (propositionWithTrueTruth == qcm.getPropositionCount()) {
+                if (propositionWithTrueTruth > 1 && propositionWithTrueTruth == qcm.getPropositionCount()) {
                     toRemove.add(qcm);
                 } else {
                     if (qcm.getMaxPropositionPerExercise() <= 0) {
