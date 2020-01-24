@@ -120,7 +120,9 @@ public class Quiz implements QPackage {
         if (time > 0) {
             return time;
         }
-        return getSummary().getConfig().getDuration() / getSummary().getConfig().getMaxQuestionCountPerSession();
+        long testDuration = getSummary().getConfig().getDuration();
+        long maxQuestionCountPerSession = getSummary().getConfig().getMaxQuestionCountPerSession();
+        return testDuration == 0 || maxQuestionCountPerSession == 0 ? 0 : testDuration / maxQuestionCountPerSession;
     }
 
 
