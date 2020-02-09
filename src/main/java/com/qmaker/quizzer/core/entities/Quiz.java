@@ -263,6 +263,7 @@ public class Quiz implements QPackage {
                 if (propositionWithTrueTruth > 1 && propositionWithTrueTruth == qcm.getPropositionCount()) {
                     toRemove.add(qcm);
                 } else {
+                    //TODO bien reflechir a si ceci doit être controllé pour les version du BuildTools qui supporteront complectement Quizer.
                     if (qcm.getMaxPropositionPerExercise() <= 0) {
                         qcm.setMaxPropositionPerExercise(maxAnswer);
                     }
