@@ -130,10 +130,12 @@ public class Quiz implements QPackage {
         return component.getSummaryProperties().getBoolean(FIELD_ALLOW_QUESTION_CUSTOM_TIME);
     }
 
+    @Deprecated
     public int getMaxPropositionPerCountExercise() {
         return component.getSummaryProperties().getInt(FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE);
     }
 
+    @Deprecated
     public int getMaxTrueAnswerCountPerExercise() {
         return component.getSummaryProperties().getInt(FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE);
     }
