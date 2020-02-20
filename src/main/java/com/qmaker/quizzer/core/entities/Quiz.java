@@ -17,6 +17,7 @@ import java.util.List;
  */
 
 public class Quiz implements QPackage {
+    public static int VERSION = 3;
 
     public final static String FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE = "maxPropositionCountPerExercise",
             FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE = "maxTrueAnswerCountPerExercise";
@@ -34,6 +35,7 @@ public class Quiz implements QPackage {
             DEFAULT_MIN_PROPOSITION_COUNT_PER_MULTIPLE_CHOICE_EXERCISE = 2,
             DEFAULT_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE = 1;
     Component component;
+    int forceCompatVersion = 0;
 
     public final static class DefinitionBuilder {
         Component.Definition definition = new Component.Definition(Quiz.TAG);
@@ -90,7 +92,7 @@ public class Quiz implements QPackage {
 
         public Component.Definition create() {
             definition.setName("quizzer");
-            definition.setBuilderVersionCode(2);
+            definition.setBuilderVersionCode(VERSION);
             return definition;
         }
 
@@ -113,6 +115,10 @@ public class Quiz implements QPackage {
         }
         Quiz quiz = new Quiz(component);
         return quiz;
+    }
+
+    public void setForceCompat(int forceCompat) {
+        this.forceCompatVersion = forceCompat;
     }
 
     public long getTimePerExercise() {
@@ -178,7 +184,14 @@ public class Quiz implements QPackage {
     }
 
     public int getBuilderVersion() {
-        return component.getBuilderVersionCode();
+        int version = component.getBuilderVersionCode();
+        if (version > 0) {
+            return version;
+        }
+        if (getSummary().getConfig().getBuildToolsVersion() <= 3.3) {
+            return 2;
+        }
+        return VERSION;
     }
 
     public int getPriority() {
@@ -245,6 +258,11 @@ public class Quiz implements QPackage {
         int maxAnswer;
         int maxAnswerTrue;
         com.qmaker.core.utils.Bundle bundle = component.getSummaryProperties();
+        int versionCode = getBuilderVersion();
+        boolean forceCompatV2 = forceCompatVersion <= 2 || versionCode <= 2;
+        if (!forceCompatV2) {
+            return qcms;
+        }
         maxAnswer = bundle.getInt(Quiz.FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE, 4);
         maxAnswerTrue = bundle.getInt(Quiz.FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE, 1);
         List<Qcm> toRemove = new ArrayList();
@@ -265,7 +283,6 @@ public class Quiz implements QPackage {
                 if (propositionWithTrueTruth > 1 && propositionWithTrueTruth == qcm.getPropositionCount()) {
                     toRemove.add(qcm);
                 } else {
-                    //TODO bien reflechir a si ceci doit être controllé pour les version du BuildTools qui supporteront complectement Quizer.
                     if (qcm.getMaxPropositionPerExercise() <= 0) {
                         qcm.setMaxPropositionPerExercise(maxAnswer);
                     }
@@ -286,9 +303,5 @@ public class Quiz implements QPackage {
     public void reset() {
         this.cachedQuestionnaire = null;
     }
-//
-//    public void setPartialSuccessSound(String partialSuccessSound) {
-//        this.partialSuccessSound = partialSuccessSound;
-//    }
 
 }
