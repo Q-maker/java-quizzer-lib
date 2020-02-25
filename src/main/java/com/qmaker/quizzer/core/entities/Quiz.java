@@ -38,6 +38,18 @@ public class Quiz implements QPackage {
     public final static class DefinitionBuilder {
         Component.Definition definition = new Component.Definition(Quiz.TAG);
 
+        @Deprecated
+        public DefinitionBuilder setMaxPropositionPerCountExercise(int value) {
+            definition.putSummaryProperty(FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE, value);
+            return this;
+        }
+
+        @Deprecated
+        public DefinitionBuilder setMaxTrueAnswerCountPerExercise(int value) {
+            definition.putSummaryProperty(FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE, value);
+            return this;
+        }
+
         public DefinitionBuilder setTimePerExerise(long time) {
             definition.putSummaryProperty(FIELD_TIME_PER_EXERCISE, time);
             return this;
