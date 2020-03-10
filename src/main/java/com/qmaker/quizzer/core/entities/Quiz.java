@@ -200,7 +200,7 @@ public class Quiz implements QPackage {
         if (version > 0) {
             return version;
         }
-        if (getSummary().getConfig().getBuildToolsVersion() <= 3.3) {
+        if (getSummary().getConfig().getBuildToolsVersion() < 4) {
             return 2;
         }
         return VERSION;
@@ -271,7 +271,7 @@ public class Quiz implements QPackage {
         int maxAnswerTrue;
         com.qmaker.core.utils.Bundle bundle = component.getSummaryProperties();
         int versionCode = getBuilderVersion();
-        boolean forceCompatV2 = forceCompatVersion <= 2 || versionCode <= 2;
+        boolean forceCompatV2 = (forceCompatVersion > 0 && forceCompatVersion <= 2) || versionCode <= 2;
         if (!forceCompatV2) {
             return qcms;
         }
