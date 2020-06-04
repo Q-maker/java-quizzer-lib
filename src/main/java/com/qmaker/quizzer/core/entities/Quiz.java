@@ -211,19 +211,29 @@ public class Quiz implements QPackage {
     }
 
     Questionnaire cachedQuestionnaire;
+    boolean useCache = false;
+
+    public void setUseCache(boolean useCache) {
+        this.useCache = useCache;
+    }
+
+    public boolean isUseCache() {
+        return useCache;
+    }
 
     //TODO reflechir au bien fondé de mettre l'instance de Quetionnaire en cache.
     @Override
     public Questionnaire getQuestionnaire() throws IOException {
-        if (cachedQuestionnaire == null) {
-            return fetchQuestionnaire();
+        boolean shouldQuizify = shouldQuizify();
+        boolean compatV3 = shouldForceCompatV3();
+        if (useCache || compatV3 || shouldQuizify) {
+            if (cachedQuestionnaire == null) {
+                cachedQuestionnaire = shouldQuizify || compatV3 ? toQuiz(component.getQuestionnaire()) : component.getQuestionnaire();
+            }
+            return cachedQuestionnaire;
+        } else {
+            return component.getQuestionnaire();
         }
-        return cachedQuestionnaire;
-    }
-
-    public Questionnaire fetchQuestionnaire() throws IOException {
-        cachedQuestionnaire = toQuiz(component.getQuestionnaire());
-        return cachedQuestionnaire;
     }
 
     @Override
@@ -266,15 +276,19 @@ public class Quiz implements QPackage {
         return component.getQPackage().getSystem();
     }
 
+    private boolean shouldForceCompatV3() {
+        return (forceCompatVersion > 0 && forceCompatVersion <= 2) || getBuilderVersion() <= 2;
+    }
+
+    private boolean shouldQuizify() {
+        com.qmaker.core.utils.Bundle bundle = component.getSummaryProperties();
+        return bundle.getInt(Quiz.FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE) > 0 || bundle.getInt(Quiz.FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE) > 0;
+    }
+
     private Questionnaire toQuiz(Questionnaire qcms) {
         int maxAnswer;
         int maxAnswerTrue;
         com.qmaker.core.utils.Bundle bundle = component.getSummaryProperties();
-        int versionCode = getBuilderVersion();
-        boolean forceCompatV2 = (forceCompatVersion > 0 && forceCompatVersion <= 2) || versionCode <= 2;
-        if (!forceCompatV2) {
-            return qcms;
-        }
         maxAnswer = bundle.getInt(Quiz.FIELD_MAX_PROPOSITION_COUNT_PER_EXERCISE, 4);
         maxAnswerTrue = bundle.getInt(Quiz.FIELD_MAX_TRUE_ANSWER_COUNT_PER_EXERCISE, 1);
         List<Qcm> toRemove = new ArrayList();
