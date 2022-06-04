@@ -6,6 +6,7 @@ import com.qmaker.core.engines.QSystem;
 import com.qmaker.core.entities.QSummary;
 import com.qmaker.core.entities.Qcm;
 import com.qmaker.core.entities.Questionnaire;
+import com.qmaker.core.io.IOInterface;
 import com.qmaker.core.io.QPackage;
 
 import java.io.IOException;
@@ -72,12 +73,12 @@ public class Quiz implements QPackage {
             return this;
         }
 
-        public DefinitionBuilder setSuccedSoundUri(String uri) {
+        public DefinitionBuilder setSuccessSoundUri(String uri) {
             definition.putSummaryProperty(FIELD_SUCCESS_SOUND_URI, uri);
             return this;
         }
 
-        public DefinitionBuilder setPartialSuccedSoundUri(String uri) {
+        public DefinitionBuilder setPartialSuccessSoundUri(String uri) {
             definition.putSummaryProperty(FIELD_SUCCESS_SOUND_URI, uri);
             return this;
         }
@@ -262,8 +263,35 @@ public class Quiz implements QPackage {
     }
 
     @Override
-    public boolean rename(String newFileUri) {
-        return component.getQPackage().rename(newFileUri);
+    public long length() {
+        return component.getQPackage().length();
+    }
+
+    @Override
+    public long lastModifiedAt() {
+        return component.getQPackage().lastModifiedAt();
+    }
+
+    @Override
+    public boolean moveTo(String destinationUri) {
+        return component.getQPackage().moveTo(destinationUri);
+    }
+
+    @Override
+    @Deprecated
+    public boolean isEditable() {
+        return component.getQPackage().isEditable();
+    }
+
+    @Override
+    @Deprecated
+    public boolean isOperationSupported(IOInterface.Operation operation) {
+        return component.getQPackage().isOperationSupported(operation);
+    }
+
+    @Override
+    public int getSupportedOperationFlags() {
+        return component.getQPackage().getSupportedOperationFlags();
     }
 
     @Override
