@@ -31,7 +31,7 @@
 | `entities/` | `Quiz`, `Ambiance` |
 | `interfaces/` | `QuizProvider` |
 | `engines/` | `Quizzer` — moteur de quiz |
-| `utils/` | `Toolkits`, `ArrayListQuizProvider` |
+| `utils/` | `ToolKit`, `ArrayListQuizProvider` |
 
 ### Classes clés
 
